@@ -1,0 +1,10 @@
+# Core dependencies (pinned to the versions in the working venv).
+# Mirrors pyproject.toml. Install with: pip install -r requirements.txt
+lightgbm==4.6.0
+catboost==1.2.10
+optuna==4.9.0
+scikit-learn==1.9.0
+pandas==3.0.3
+numpy==2.4.6
+scipy==1.17.1
+joblib==1.5.3

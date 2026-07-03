@@ -1,0 +1,35 @@
+# ── Virtual environment ───────────────────────────────────────────────
+venv/
+
+# ── Data (large; possibly redistribution-restricted) ──────────────────
+data/raw/*.csv
+data/processed/*
+
+# ── Generated model artifacts & training logs ─────────────────────────
+models/*.joblib
+models/*.cbm
+catboost_info/
+
+# ── Generated outputs ─────────────────────────────────────────────────
+submission_*.csv
+submission.zip
+reports/figures/*.png
+
+# ── Experiment tracking (added in a later phase) ──────────────────────
+wandb/
+
+# ── Secrets ───────────────────────────────────────────────────────────
+.env
+
+# ── Python cruft ──────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# ── Keep empty dirs tracked (see .gitkeep files) ──────────────────────
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+!reports/figures/.gitkeep
