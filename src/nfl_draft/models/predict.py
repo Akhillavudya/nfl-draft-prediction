@@ -5,6 +5,7 @@ from catboost import CatBoostClassifier
 
 from nfl_draft.config import MODELS_DIR, CAT_COLS, CAT_FEATS, DRILL_COLS, TARGET
 from nfl_draft.features.build import engineer_base, smooth_encode
+from nfl_draft.models.explain import top_factors
 
 # Numeric raw fields that must be coerced (blank → NaN, never 0).
 _NUMERIC_RAW = ["Height", "Weight"] + DRILL_COLS
@@ -64,4 +65,4 @@ def predict_one(player):
     cb_p = catboost.predict_proba(cb)[:, 1][0]
 
     prob = pp["w_lgbm"] * lgbm_p + pp["w_cb"] * cb_p
-    return {"probability": float(prob), "top_factors": []}
+    return {"probability": float(prob), "top_factors": top_factors(lg)}

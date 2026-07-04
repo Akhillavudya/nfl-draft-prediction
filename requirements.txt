@@ -9,5 +9,13 @@ numpy==2.4.6
 scipy==1.17.1
 joblib==1.5.3
 
+# Explainability (Phase C): SHAP values + the plotting backend we save figures with.
+shap==0.51.0
+matplotlib==3.10.9
+
+# Experiment tracking (Phase C): W&B dashboard + .env loader for the API key.
+wandb==0.28.0
+python-dotenv==1.2.2
+
 # Dev/test only.
 pytest==9.1.1

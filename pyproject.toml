@@ -16,6 +16,10 @@ dependencies = [
     "numpy==2.4.6",
     "scipy==1.17.1",
     "joblib==1.5.3",
+    "shap==0.51.0",
+    "matplotlib==3.10.9",
+    "wandb==0.28.0",
+    "python-dotenv==1.2.2",
 ]
 
 # Dev/test-only tools, installed with: pip install -e ".[dev]"
