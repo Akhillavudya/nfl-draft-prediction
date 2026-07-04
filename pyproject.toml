@@ -18,6 +18,16 @@ dependencies = [
     "joblib==1.5.3",
 ]
 
+# Dev/test-only tools, installed with: pip install -e ".[dev]"
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+]
+
 # Tells setuptools our code lives under src/ (the "src layout").
 [tool.setuptools.packages.find]
 where = ["src"]
+
+# Let pytest find the tests/ directory from the project root.
+[tool.pytest.ini_options]
+testpaths = ["tests"]
