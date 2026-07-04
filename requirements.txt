@@ -17,5 +17,8 @@ matplotlib==3.10.9
 wandb==0.28.0
 python-dotenv==1.2.2
 
+# Serverless deployment (Phase D): Modal SDK + CLI (the `modal` command).
+modal==1.5.1
+
 # Dev/test only.
 pytest==9.1.1

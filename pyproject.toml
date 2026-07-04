@@ -20,6 +20,7 @@ dependencies = [
     "matplotlib==3.10.9",
     "wandb==0.28.0",
     "python-dotenv==1.2.2",
+    "modal==1.5.1",
 ]
 
 # Dev/test-only tools, installed with: pip install -e ".[dev]"

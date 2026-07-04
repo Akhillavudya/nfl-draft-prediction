@@ -1,11 +1,13 @@
 """Central configuration: paths, seeds, model params, and column lists."""
+import os
 from pathlib import Path
 
 # Project root = two folders up from this file (src/nfl_draft/config.py).
 PROJECT_ROOT    = Path(__file__).resolve().parents[2]
 DATA_RAW        = PROJECT_ROOT / "data" / "raw"
 DATA_PROCESSED  = PROJECT_ROOT / "data" / "processed"
-MODELS_DIR      = PROJECT_ROOT / "models"
+# Deployment (e.g. Modal) sets NFL_DRAFT_MODELS_DIR; locally it falls back to ./models.
+MODELS_DIR      = Path(os.environ.get("NFL_DRAFT_MODELS_DIR", PROJECT_ROOT / "models"))
 REPORTS_FIGURES = PROJECT_ROOT / "reports" / "figures"
 
 # The three raw competition files.
