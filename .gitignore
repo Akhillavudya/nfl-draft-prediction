@@ -20,6 +20,10 @@ reports/figures/*.png
 # ── Experiment tracking (added in a later phase) ──────────────────────
 wandb/
 
+# ── Gradio UI runtime cruft (Phase E) ─────────────────────────────────
+flagged/
+.gradio/
+
 # ── Secrets ───────────────────────────────────────────────────────────
 .env
 

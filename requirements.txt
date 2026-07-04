@@ -20,5 +20,9 @@ python-dotenv==1.2.2
 # Serverless deployment (Phase D): Modal SDK + CLI (the `modal` command).
 modal==1.5.1
 
+# Front-end (Phase E): Gradio UI + requests (the thin client that POSTs to Modal).
+gradio==6.19.0
+requests==2.34.2
+
 # Dev/test only.
 pytest==9.1.1

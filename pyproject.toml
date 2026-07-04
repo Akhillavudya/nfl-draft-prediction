@@ -21,6 +21,8 @@ dependencies = [
     "wandb==0.28.0",
     "python-dotenv==1.2.2",
     "modal==1.5.1",
+    "gradio==6.19.0",
+    "requests==2.34.2",
 ]
 
 # Dev/test-only tools, installed with: pip install -e ".[dev]"

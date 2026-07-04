@@ -77,7 +77,7 @@ nfl-draft-prediction/
 │   └── tracking/             # experiment tracking + explainability
 ├── experiments/              # original staged scripts (phase0→phase3) — how it was built
 ├── notebooks/                # EDA + tutorials
-├── app/                      # modal_app.py — live Modal serving endpoint  (Gradio UI next)
+├── app/                      # modal_app.py (serving endpoint) + gradio_app.py (UI)
 ├── models/                   # saved model artifacts  (generated, not committed)
 ├── reports/figures/          # charts, e.g. SHAP importance
 ├── docs/                     # plan + per-step beginner explanations
@@ -139,6 +139,20 @@ missing-data edge holds end-to-end over HTTP.
 
 Deploy your own copy from the repo root with `modal deploy app/modal_app.py` (after `modal setup`).
 
+### Web UI (Gradio)
+
+`app/gradio_app.py` is a small **[Gradio](https://gradio.app) form** — a *thin client* that does no ML
+itself. It collects a player's raw stats, POSTs them to the Modal endpoint above, and renders the draft
+probability plus the top SHAP factors. Clearing a Combine field leaves it blank (`NaN`), so the
+missing-data signal drives the result just as it does over `curl`.
+
+```bash
+python app/gradio_app.py          # serves a local URL (defaults to the deployed Modal endpoint)
+```
+
+Point it at your own deploy by setting `MODAL_ENDPOINT_URL` before launching. Because it's a thin
+client, it can be hosted anywhere (e.g. HF Spaces) while Modal remains the model service.
+
 ---
 
 ## Roadmap
@@ -150,7 +164,7 @@ model. See [`docs/final-plan.md`](docs/final-plan.md).
 - [x] **Phase B** — persist a full-train model (`joblib`) + single-row inference
 - [x] **Phase C** — Weights & Biases experiment tracking + SHAP explainability
 - [x] **Phase D** — Modal serverless prediction endpoint
-- [ ] **Phase E** — Gradio UI
+- [x] **Phase E** — Gradio UI (thin client to the Modal endpoint)
 
 Beginner-friendly write-ups of each step live in [`docs/explanations/`](docs/explanations/).
 
