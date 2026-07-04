@@ -77,7 +77,7 @@ nfl-draft-prediction/
 │   └── tracking/             # experiment tracking + explainability
 ├── experiments/              # original staged scripts (phase0→phase3) — how it was built
 ├── notebooks/                # EDA + tutorials
-├── app/                      # serving endpoint + UI  (in progress)
+├── app/                      # modal_app.py — live Modal serving endpoint  (Gradio UI next)
 ├── models/                   # saved model artifacts  (generated, not committed)
 ├── reports/figures/          # charts, e.g. SHAP importance
 ├── docs/                     # plan + per-step beginner explanations
@@ -113,15 +113,43 @@ pip install -e .
 
 ---
 
+## Deployment — live prediction API (Modal)
+
+The trained ensemble is served as a **serverless endpoint on [Modal](https://modal.com)**. POST a
+player's raw stats as JSON; get back a draft probability plus the top SHAP factors behind it.
+
+```bash
+curl -X POST https://akhillavudya4567--nfl-draft-prediction-predict.modal.run \
+  -H "Content-Type: application/json" \
+  -d '{"Age":22,"Height":74,"Weight":210,"Sprint_40yd":4.5,"Vertical_Jump":35,
+       "Bench_Press_Reps":18,"Broad_Jump":120,"Agility_3cone":6.9,"Shuttle":4.2,
+       "School":"Alabama","Player_Type":"offense","Position_Type":"backs_receivers","Position":"WR"}'
+# -> {"probability": 0.856, "top_factors": [...]}
+```
+
+**Leave a Combine field blank** (omit it) and it stays `NaN`, never `0` — so the `_missing` flags fire
+and the probability drops sharply (the same player with all drills blank scores ~0.07). The model's
+missing-data edge holds end-to-end over HTTP.
+
+> **Cold start:** Modal is serverless, so it runs *no* server while idle (and bills nothing). The first
+> request after a quiet period spins up a fresh container and loads the three model artifacts
+> (`lgbm_full.joblib`, `catboost_full.cbm`, `preprocess.joblib`) from disk once — a few seconds of
+> latency. The container then stays warm and reuses the loaded models for subsequent requests, so
+> follow-up calls are fast.
+
+Deploy your own copy from the repo root with `modal deploy app/modal_app.py` (after `modal setup`).
+
+---
+
 ## Roadmap
 
 This repo is being extended from a batch competition script into a **shipped, tracked, explainable**
 model. See [`docs/final-plan.md`](docs/final-plan.md).
 
 - [x] **Phase A** — industry project structure, installable `nfl_draft` package, repo hygiene
-- [ ] **Phase B** — persist a full-train model (`joblib`) + single-row inference
-- [ ] **Phase C** — Weights & Biases experiment tracking + SHAP explainability
-- [ ] **Phase D** — Modal serverless prediction endpoint
+- [x] **Phase B** — persist a full-train model (`joblib`) + single-row inference
+- [x] **Phase C** — Weights & Biases experiment tracking + SHAP explainability
+- [x] **Phase D** — Modal serverless prediction endpoint
 - [ ] **Phase E** — Gradio UI
 
 Beginner-friendly write-ups of each step live in [`docs/explanations/`](docs/explanations/).
